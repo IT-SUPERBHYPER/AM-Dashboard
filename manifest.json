@@ -1,0 +1,21 @@
+{
+    "name": "Superb Hyper Dashboard",
+    "short_name": "Hyper Dashboard",
+    "description": "Quick access to your essential applications.",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#1a202c",
+    "theme_color": "#1a202c",
+    "icons": [
+        {
+            "src": "icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
