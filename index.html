@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Superb Hyper Dashboard</title>
-    <!-- Link to the Web App Manifest -->
     <link rel="manifest" href="manifest.json">
-    <!-- Theme color for the browser's address bar -->
     <meta name="theme-color" content="#1a202c">
-    <!-- Apple Touch Icon (for iOS PWA) - points to icon in main directory -->
     <link rel="apple-touch-icon" href="icon-192x192.png">
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
@@ -23,8 +18,6 @@
 </head>
 <body class="min-h-screen bg-gray-900 text-gray-100 p-4 sm:p-8 flex items-center justify-center">
     <div class="w-full max-w-6xl">
-        <!-- Dashboard Header -->
-        <!-- Added 'group' class to enable hover effects on child elements -->
         <header class="text-center mb-12 group">
             <h1 class="text-4xl sm:text-5xl font-extrabold text-blue-400 mb-4
                        transition-all duration-300 group-hover:text-blue-300 group-hover:drop-shadow-lg">
@@ -35,12 +28,9 @@
             </p>
         </header>
 
-        <!-- Applications Grid Container -->
         <div id="applications-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Application cards will be injected here by JavaScript -->
-        </div>
+            </div>
 
-        <!-- Footer -->
         <footer class="text-center mt-12 text-gray-500 text-sm">
             <p>&copy; <span id="current-year"></span> Superb Hyper IT. All rights reserved.</p>
         </footer>
@@ -79,6 +69,11 @@
                 url: "https://it-superbhyper.github.io/DIESEL-/",
                 description: "Monitor and manage diesel-related operations."
             },
+            {
+                name: "Reception Stocks",
+                url: "https://it-superbhyper.github.io/T-ROLLS/",
+                description: "Manage and track inventory for reception supplies."
+            },
         ];
 
         // Get the container for the application cards
@@ -94,7 +89,6 @@
                     class="block bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-700 hover:border-blue-500"
                 >
                     <div class="flex items-center mb-4">
-                        <!-- Inline SVG for ExternalLink icon, mimicking lucide-react -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-blue-400 mr-3">
                             <path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                         </svg>
@@ -103,7 +97,6 @@
                     <p class="text-gray-400 text-base mb-4">${app.description}</p>
                     <span class="text-blue-300 hover:text-blue-200 text-sm font-medium flex items-center">
                         Go to Application
-                        <!-- Arrow SVG remains for visual consistency -->
                         <svg
                             class="w-4 h-4 ml-2"
                             fill="none"
