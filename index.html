@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>Superb Hyper Dashboard</title>
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#1a202c" />
+  <meta name="theme-color" content="#000000" />
   <link rel="apple-touch-icon" href="icon-192x192.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/sortablejs@1.14.0/Sortable.min.js"></script>
@@ -14,270 +14,106 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* Animated background gradient */
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(270deg, #0f121a, #1e3c72, #c14b4b, #0f121a);
-      background-size: 800% 800%;
-      animation: gradientAnimation 30s ease infinite;
+      background: #000; /* AMOLED black */
       color: #e0e7ff;
       min-height: 100vh;
       margin: 0;
       overflow-x: hidden;
     }
-    @keyframes gradientAnimation {
-      0% {background-position:0% 50%;}
-      50% {background-position:100% 50%;}
-      100% {background-position:0% 50%;}
-    }
 
     header h1 {
-      background: linear-gradient(90deg, #c14b4b, #1e3c72);
+      background: linear-gradient(90deg, #ff007f, #00e5ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: 800;
-      text-shadow: 0 0 8px rgba(193, 75, 75, 0.65), 0 0 12px rgba(30, 60, 114, 0.7);
-    }
-
-    header p {
-      color: #a0aec0;
-      font-weight: 600;
+      font-size: 2.2rem;
+      text-shadow: 0 0 12px rgba(255, 0, 127, 0.7), 0 0 18px rgba(0, 229, 255, 0.7);
     }
 
     .glass-panel {
-      position: relative;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(193, 75, 75, 0.25);
-      backdrop-filter: blur(15px);
-      border-radius: 24px;
-      box-shadow:
-        0 8px 30px rgba(193, 75, 75, 0.2),
-        inset 0 0 10px rgba(30, 60, 114, 0.4);
-      padding: 2rem;
-      transition: box-shadow 0.3s ease;
-      min-height: 320px;
-      margin-bottom: 2rem;
-    }
-    .glass-panel:hover {
-      box-shadow:
-        0 12px 40px rgba(193, 75, 75, 0.4),
-        inset 0 0 15px rgba(30, 60, 114, 0.7);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 1.5rem;
+      box-shadow: 0 12px 40px rgba(0, 229, 255, 0.1);
+      min-height: 360px;
     }
 
     .tab-btn {
       font-weight: 700;
-      padding: 0.75rem 1.8rem;
+      padding: 0.8rem 2rem;
       border-radius: 9999px;
       cursor: pointer;
-      border: 2px solid transparent;
       transition: all 0.3s ease;
-      background-size: 200% 100%;
-      color: #f0f4f8;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-      user-select: none;
-      outline-offset: 2px;
-    }
-    .tab-btn[data-tab="daily"] {
-      background-image: linear-gradient(90deg, #b74949, #d95353);
-      border-color: #b74949;
-      text-shadow: 0 0 5px #d95353;
-    }
-    .tab-btn[data-tab="weekly"] {
-      background-image: linear-gradient(90deg, #0d47a1, #1976d2);
-      border-color: #0d47a1;
-      text-shadow: 0 0 6px #1976d2;
-    }
-    .tab-btn[data-tab="monthly"] {
-      background-image: linear-gradient(90deg, #6a1b9a, #8e24aa);
-      border-color: #6a1b9a;
-      text-shadow: 0 0 6px #8e24aa;
-    }
-    .tab-btn:hover {
-      background-position: 100% 0;
-      box-shadow: 0 0 12px rgba(201, 75, 75, 0.7), 0 0 20px rgba(0 0 255 / 0.6);
-      color: white;
-      transform: scale(1.05);
+      background: #111;
+      border: 2px solid transparent;
+      color: #eee;
     }
     .tab-btn.active {
-      box-shadow: 0 0 20px rgba(201, 75, 75, 0.85), 0 0 25px rgba(0 0 255 / 0.8);
-      transform: scale(1.1);
+      background: linear-gradient(90deg, #ff007f, #00e5ff);
+      color: white;
+      box-shadow: 0 0 18px rgba(0,229,255,0.6);
+      transform: scale(1.08);
     }
 
     .tab-content {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.95);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      display: grid;
+      display: none;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
     }
-
-    .tab-content.active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: scale(1);
-      position: relative;
-    }
+    .tab-content.active { display: grid; }
 
     .tilt-card {
-      perspective: 1000px;
-      transform-style: preserve-3d;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #1e3c72, #c14b4b);
-      box-shadow:
-        0 4px 15px rgba(193, 75, 75, 0.55),
-        inset 0 0 10px rgba(30, 60, 114, 0.8);
-      color: #f0f4f8;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #111, #1a1a1a);
+      box-shadow: 0 8px 24px rgba(0, 229, 255, 0.25);
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
+      color: #fff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .tilt-card:hover {
-      transform: rotateX(8deg) rotateY(8deg) scale(1.05);
-      box-shadow:
-        0 12px 30px rgba(209, 75, 75, 0.75),
-        inset 0 0 20px rgba(30, 60, 114, 1);
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 16px 40px rgba(255, 0, 127, 0.4);
     }
 
-    .tilt-card h2 {
-      font-weight: 700;
-      font-size: 1.6rem;
-      text-shadow: 0 0 5px rgba(209, 75, 75, 0.7), 0 0 7px rgba(102, 136, 255, 0.7);
-      margin-bottom: 0.5rem;
-      text-transform: capitalize;
-    }
-
-    .tilt-card p {
-      color: #cbd5e1;
-      flex-grow: 1;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      line-height: 1.3;
-      text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
-      text-transform: capitalize;
-    }
-
-    .go-to-app {
-      align-self: flex-start;
-      color: #e67c7c;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      transition: color 0.3s ease;
-      text-shadow: 0 0 4px rgba(201, 75, 75, 0.8);
-    }
-    .go-to-app:hover {
-      color: #66aaff;
-      text-shadow: 0 0 10px rgba(102, 170, 255, 0.9);
-    }
-
-    /* Extra details panel: hidden by default */
-    .details {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(8px);
-      padding: 0.75rem 1rem;
-      font-size: 0.85rem;
-      color: #c0c5d8;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(100%);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      border-radius: 0 0 16px 16px;
-      text-transform: capitalize;
-    }
-
-    .tilt-card:hover .details {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
-
-    /* Buttons inside details */
-    .details button {
-      background: transparent;
-      border: none;
-      color: #c0c5d8;
-      cursor: pointer;
-      font-size: 1.2rem;
-      transition: color 0.3s ease;
-      padding: 0;
-      margin-left: 0.5rem;
-    }
-    .details button:hover {
-      color: #66aaff;
-    }
-    .details button.fav.active {
-      color: #e67c7c;
-      text-shadow: 0 0 5px #e67c7c;
-    }
-
-    /* Tooltip for buttons */
-    .tooltip {
-      position: relative;
-      display: inline-block;
-    }
-    .tooltip:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.8);
-      color: #fff;
-      padding: 4px 8px;
-      border-radius: 6px;
-      white-space: nowrap;
-      font-size: 0.75rem;
-      pointer-events: none;
-      opacity: 1;
-      transition: opacity 0.2s ease;
-      z-index: 10;
-    }
+    .dark-mode body { background: #fff; color: #111; }
   </style>
 </head>
 <body>
   <div class="max-w-7xl mx-auto px-6 py-10">
-    <header class="text-center mb-12">
+    <header class="text-center mb-10">
       <h1>Superb Hyper Dashboard</h1>
-      <p>Quick access to your essential applications</p>
+      <p class="text-gray-400">Quick access to your essential applications</p>
     </header>
 
-    <div class="flex justify-center mb-8 gap-4">
-      <button class="tab-btn active" data-tab="daily">Daily</button>
+    <!-- Tab controls -->
+    <div class="flex justify-center mb-8 gap-4 flex-wrap">
+      <button class="tab-btn active" data-tab="favorites">⭐ Favorites</button>
+      <button class="tab-btn" data-tab="daily">Daily</button>
       <button class="tab-btn" data-tab="weekly">Weekly</button>
       <button class="tab-btn" data-tab="monthly">Monthly</button>
     </div>
 
     <div class="glass-panel">
-      <div id="daily" class="tab-content active"></div>
+      <div id="favorites" class="tab-content active"></div>
+      <div id="daily" class="tab-content"></div>
       <div id="weekly" class="tab-content"></div>
       <div id="monthly" class="tab-content"></div>
     </div>
 
-    <footer class="text-center mt-16 text-gray-400 text-sm">
+    <footer class="text-center mt-12 text-gray-500 text-sm">
       <p>&copy; <span id="current-year"></span> Superb Hyper IT. All rights reserved.</p>
+      <button id="theme-toggle" class="mt-2 px-4 py-2 rounded-lg border border-gray-500 text-sm">🌙 Toggle Theme</button>
     </footer>
   </div>
 
   <script>
-    // Example last update dates for apps (could come from API later)
     const lastUpdates = {
       "Bowser And Water": "2025-07-20",
       "Paraffin Log Sheet": "2025-07-22",
@@ -296,12 +132,13 @@
         { name: "Bowser And Water", url: "https://it-superbhyper.github.io/BOWSER-AND-WATER-/", description: "Access tools related to bowser and water management." },
         { name: "Paraffin Log Sheet", url: "https://it-superbhyper.github.io/Paraffin-Log-Sheet/", description: "Log and track paraffin usage." }
       ],
-      weekly: [
+          weekly: [
         { name: "Visitor Form", url: "https://it-superbhyper.github.io/Visitor-Form/", description: "Streamline visitor registration and management." },
         { name: "Ilembe Flats", url: "https://it-superbhyper.github.io/ILEMBE-FLATS/", description: "Access information and tools related to Ilembe Flats." },
         { name: "Reception Stocks", url: "https://it-superbhyper.github.io/T-ROLLS/", description: "Manage and track inventory for reception supplies." },
         { name: "Diesel", url: "https://it-superbhyper.github.io/DIESEL-/", description: "Monitor and manage diesel-related operations." },
-        { name: "Superb Hyper It", url: "https://it-superbhyper.github.io/Superb-Hyper-IT-/", description: "Explore various IT solutions and services." }
+        { name: "Superb Hyper It", url: "https://it-superbhyper.github.io/Superb-Hyper-IT-/", description: "Explore various IT solutions and services." },
+        { name: "Advanced Driver Manager", url: "https://it-superbhyper.github.io/Driver-Management/", description: "Manage and monitor all company drivers and vehicles." }
       ],
       monthly: [
         { name: "Fnb Fleet Card", url: "https://it-superbhyper.github.io/FNB-FLEET-CARD/", description: "Manage your FNB Fleet Card operations efficiently." },
@@ -310,7 +147,6 @@
       ]
     };
 
-    // Store favorite apps in localStorage
     let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
 
     function createAppCard(app) {
@@ -318,35 +154,17 @@
       const isFav = favorites[app.name] === true;
 
       return `
-        <a href="${app.url}" target="_blank" rel="noopener noreferrer" class="tilt-card" data-aos="zoom-in" style="display:flex; flex-direction: column; justify-content: space-between;">
+        <div class="tilt-card" data-aos="fade-up">
           <div>
-            <div class="flex items-center mb-4 gap-3">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
-                <path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-              </svg>
-              <h2>${app.name.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())}</h2>
-            </div>
-            <p>${app.description.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())}</p>
+            <h2 class="font-bold text-lg mb-2">${app.name}</h2>
+            <p class="text-gray-300 mb-3">${app.description}</p>
+            <p class="text-xs text-gray-500">Last updated: ${lastUpdate}</p>
           </div>
-          <div class="details">
-            <span>Last updated: ${lastUpdate}</span>
-            <div>
-              <button class="open-btn tooltip" data-tooltip="Open in new tab" title="Open in new tab" aria-label="Open in new tab" onclick="event.preventDefault(); window.open('${app.url}', '_blank');">
-                🔗
-              </button>
-              <button class="fav tooltip ${isFav ? 'active' : ''}" data-tooltip="Favorite" title="Favorite" aria-label="Favorite" onclick="event.preventDefault(); toggleFavorite('${app.name}', this);">
-                ❤️
-              </button>
-            </div>
+          <div class="flex justify-between items-center mt-4">
+            <a href="${app.url}" target="_blank" class="px-4 py-2 bg-gradient-to-r from-pink-600 to-cyan-500 rounded-lg text-sm font-semibold">Open</a>
+            <button onclick="toggleFavorite('${app.name}', this)" class="text-xl">${isFav ? '❤️' : '🤍'}</button>
           </div>
-          <span class="go-to-app">
-            Go to Application
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </span>
-        </a>
-      `;
+        </div>`;
     }
 
     function renderApps() {
@@ -358,45 +176,47 @@
         });
         Sortable.create(container, { animation: 150 });
       }
+      renderFavorites();
     }
 
-    function switchTab(tabName) {
-      const tabs = document.querySelectorAll('.tab-content');
-      const buttons = document.querySelectorAll('.tab-btn');
-      tabs.forEach(tab => {
-        tab.classList.remove('active');
-      });
-      buttons.forEach(btn => {
-        btn.classList.remove('active');
-      });
-
-      document.getElementById(tabName).classList.add('active');
-      document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
+    function renderFavorites() {
+      const favContainer = document.getElementById('favorites');
+      favContainer.innerHTML = '';
+      for (const section in apps) {
+        apps[section].forEach(app => {
+          if (favorites[app.name]) {
+            favContainer.insertAdjacentHTML('beforeend', createAppCard(app));
+          }
+        });
+      }
     }
 
     function toggleFavorite(appName, btn) {
       favorites[appName] = !favorites[appName];
       localStorage.setItem('favorites', JSON.stringify(favorites));
-      btn.classList.toggle('active');
+      renderApps();
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabName).classList.add('active');
+      document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
     }
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        switchTab(btn.dataset.tab);
-      });
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      document.body.classList.toggle('light');
     });
 
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
     renderApps();
-    AOS.init({ duration: 700, once: true });
-    confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js')
-        .then(registration => console.log('Service Worker registered:', registration.scope))
-        .catch(error => console.error('Service Worker registration failed:', error));
-    }
+    AOS.init({ duration: 600, once: true });
+    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
   </script>
 </body>
 </html>
