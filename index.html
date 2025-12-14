@@ -3,719 +3,463 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Superb Hyper Dashboard – Islamic Neo-Futuristic</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#0f172a" />
-  <link rel="apple-touch-icon" href="icon-192x192.png" />
+  <title>Superb Hyper | Islamic Neo-Futuristic</title>
+  
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/sortablejs@1.14.0/Sortable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Scheherazade+New:wght@700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Outfit:wght@300;400;600;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --primary: #0f172a;
-      --emerald: #10b981;
-      --gold: #f59e0b;
-      --moon: #e2e8f0;
-      --purple: #8b5cf6;
+      /* DARK MODE (Default) - Emerald */
+      --bg-core: #020617;
+      --bg-mesh-1: rgba(16, 185, 129, 0.15);
+      --bg-mesh-2: rgba(245, 158, 11, 0.1);
+      
+      --glass-bg: rgba(15, 23, 42, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: rgba(0, 0, 0, 0.5);
+      
+      --primary: #10b981; /* Emerald */
+      --primary-dim: rgba(16, 185, 129, 0.1);
+      --secondary: #f59e0b; /* Gold */
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --pattern-opacity: 0.05;
+      --pattern-filter: invert(1);
     }
 
+    body.light-mode {
+      /* LIGHT MODE - Deep Sapphire */
+      --bg-core: #f1f5f9;
+      --bg-mesh-1: rgba(30, 64, 175, 0.1); /* Sapphire tint */
+      --bg-mesh-2: rgba(180, 83, 9, 0.1); /* Bronze tint */
+      
+      --glass-bg: rgba(255, 255, 255, 0.65);
+      --glass-border: rgba(30, 64, 175, 0.2);
+      --glass-shadow: rgba(148, 163, 184, 0.4);
+      
+      --primary: #1e40af; /* Deep Sapphire */
+      --primary-dim: rgba(30, 64, 175, 0.1);
+      --secondary: #b45309; /* Bronze/Dark Gold */
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      
+      --pattern-opacity: 0.03;
+      --pattern-filter: invert(0);
+    }
+
+    /* Base Transitions for smooth toggling */
     body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-      color: #e2e8f0;
-      min-height: 100vh;
-      margin: 0;
-      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-core);
+      color: var(--text-main);
       overflow-x: hidden;
-      position: relative;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    /* Mesh Gradient */
+    .mesh-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: 
+        radial-gradient(circle at 0% 0%, var(--bg-mesh-1) 0%, transparent 45%),
+        radial-gradient(circle at 100% 100%, var(--bg-mesh-2) 0%, transparent 45%);
+      z-index: -3;
+      transition: background 0.5s ease;
     }
 
     #islamic-bg {
       position: fixed;
       inset: 0;
-      background: url('https://assets.codepen.io/3837557/islamic-pattern.svg') repeat;
-      background-size: 600px;
-      opacity: 0.08;
-      animation: patternMove 140s linear infinite;
-      pointer-events: none;
+      background: url('https://www.transparenttextures.com/patterns/islamic-art.png') repeat;
+      opacity: var(--pattern-opacity);
+      filter: var(--pattern-filter);
       z-index: -2;
+      animation: pan 120s linear infinite;
+      transition: opacity 0.5s ease, filter 0.5s ease;
     }
 
-    @keyframes patternMove { 0% { background-position: 0 0; } 100% { background-position: 600px 600px; } }
+    @keyframes pan { from { background-position: 0 0; } to { background-position: 1000px 1000px; } }
 
-    .moon-logo {
-      width: 90px; height: 90px;
-      background: radial-gradient(circle at 30% 30%, #f59e0b 15%, transparent 16%), 
-                  radial-gradient(circle at 30% 30%, #0f172a 40%, transparent 41%), #10b981;
-      border-radius: 50%;
-      position: relative;
-      animation: moonGlow 8s ease-in-out infinite;
-      box-shadow: 0 0 50px rgba(245,158,11,0.6);
+    /* Glass Panels */
+    .neo-glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px 0 var(--glass-shadow);
+      border-radius: 24px;
+      transition: background 0.3s, border 0.3s, box-shadow 0.3s;
     }
 
-    .moon-logo::after {
-      content: '★';
-      position: absolute;
-      top: 15px; left: 23px;
-      font-size: 36px;
-      color: #f59e0b;
-      animation: starTwinkle 4s infinite;
-    }
-
-    @keyframes moonGlow { 0%,100% { box-shadow: 0 0 40px #f59e0b; } 50% { box-shadow: 0 0 70px #10b981; } }
-    @keyframes starTwinkle { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
-
-    header h1 {
-      font-family: 'Scheherazade New', serif;
-      font-size: 3.2rem;
-      background: linear-gradient(90deg, #f59e0b, #10b981, #f59e0b);
+    /* Typography & Accents */
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 4px;
+      background: linear-gradient(to right, var(--text-main) 20%, var(--secondary) 40%, var(--primary) 60%, var(--text-main) 80%);
+      background-size: 200% auto;
       -webkit-background-clip: text;
+      text-fill-color: transparent;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px rgba(245,158,11,0.6);
-      animation: float 8s ease-in-out infinite;
+      animation: shine-text 5s linear infinite;
     }
+    @keyframes shine-text { to { background-position: 200% center; } }
 
-    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .text-primary { color: var(--primary) !important; }
+    .text-secondary { color: var(--secondary) !important; }
+    .text-muted { color: var(--text-muted) !important; }
+    
+    .bg-primary-dim { background-color: var(--primary-dim); }
+    .border-primary-dim { border-color: var(--primary-dim); }
 
-    .bismillah {
-      font-family: 'Amiri Quran', serif;
-      font-size: 2.3rem;
-      color: #10b981;
-      text-shadow: 0 0 25px #10b981;
-      margin-bottom: 1rem;
-    }
-
-    .glass-panel {
-      background: rgba(15, 23, 42, 0.65);
-      border: 1px solid rgba(16, 185, 129, 0.5);
-      backdrop-filter: blur(20px);
-      border-radius: 32px;
-      box-shadow: 0 0 50px rgba(16, 185, 129, 0.35), inset 0 0 20px rgba(245, 158, 11, 0.15);
+    /* App Cards */
+    .app-card {
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transform-style: preserve-3d;
       position: relative;
-      overflow: hidden;
     }
-
-    .glass-panel::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(45deg, transparent 30%, rgba(245,158,11,0.1) 50%, transparent 70%);
-      animation: shine 10s linear infinite;
-      pointer-events: none;
+    .app-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 10px 40px -10px var(--primary-dim);
     }
-
-    @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-
-    .tab-btn {
-      background: linear-gradient(90deg, #1e293b, #10b981);
-      border: 2px solid #10b981;
-      border-radius: 50px;
-      padding: 0.9rem 2rem;
-      font-weight: 700;
-      color: white;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s;
-      cursor: pointer;
-    }
-
-    .tab-btn.active, .tab-btn:hover {
-      background: linear-gradient(90deg, #10b981, #f59e0b);
-      box-shadow: 0 0 35px #10b981;
-      transform: scale(1.08);
-    }
-
-    .tilt-card {
-      background: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(15,23,42,0.85));
-      border: 1px solid rgba(245,158,11,0.4);
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 0 15px rgba(16,185,129,0.2);
-      transition: all 0.4s;
-      cursor: pointer;
-    }
-
-    .tilt-card:hover {
-      transform: translateY(-10px) scale(1.03);
-      box-shadow: 0 20px 40px rgba(16,185,129,0.5), 0 0 30px rgba(245,158,11,0.4);
-    }
-
-    .go-to-app {
-      background: linear-gradient(45deg, #10b981, #f59e0b);
-      color: #0f172a;
-      font-weight: bold;
-      border-radius: 50px;
-      padding: 0.9rem 1.5rem;
-      transition: all 0.4s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .go-to-app:hover {
-      background: linear-gradient(45deg, #f59e0b, #10b981);
-      box-shadow: 0 0 30px #f59e0b;
-      transform: translateY(-4px);
-    }
-
-    .voice-assistant {
-      width: 64px; height: 64px;
-      background: linear-gradient(135deg, #10b981, #f59e0b);
-      box-shadow: 0 0 30px rgba(16,185,129,0.7);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .voice-assistant:hover {
-      transform: scale(1.1);
-    }
-
-    .voice-assistant.listening {
-      animation: pulse 1.5s infinite;
-      background: linear-gradient(135deg, #dc2626, #f59e0b);
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    .ayah-card, .prayer-card {
-      background: rgba(30,41,59,0.7);
-      border-radius: 24px;
-      border: 1px solid #f59e0b;
-      backdrop-filter: blur(12px);
-    }
-
-    .tab-content {
-      display: none;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .tab-content.active {
-      display: grid;
-    }
-
-    .notification-badge {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: #dc2626;
-      color: white;
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: bold;
-    }
-
+    
+    /* Toggle Switch */
     .theme-toggle {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 100;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
       cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .theme-toggle:hover {
-      transform: rotate(30deg);
-    }
-
-    .search-results {
-      position: absolute;
-      width: 100%;
-      background: rgba(15, 23, 42, 0.95);
-      border-radius: 16px;
-      margin-top: 8px;
-      max-height: 300px;
-      overflow-y: auto;
-      z-index: 10;
-      display: none;
-    }
-
-    .search-result-item {
-      padding: 1rem;
-      border-bottom: 1px solid rgba(16, 185, 129, 0.3);
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .search-result-item:hover {
-      background: rgba(16, 185, 129, 0.2);
-    }
-
-    .stat-card {
-      transition: transform 0.3s;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .prayer-time {
       display: flex;
-      justify-content: space-between;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px var(--glass-shadow);
     }
+    .theme-toggle:hover { transform: rotate(15deg) scale(1.1); }
+    
+    /* Tab System */
+    .tab-btn {
+      color: var(--text-muted);
+      transition: 0.3s;
+    }
+    .tab-btn.active {
+      color: var(--primary);
+      text-shadow: 0 0 15px var(--primary-dim);
+    }
+    .tab-btn.active::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: var(--primary);
+      margin: 4px auto 0;
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    #particles-js { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+    
+    .search-input {
+      color: var(--text-main);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+    }
+    .search-input::placeholder { color: var(--text-muted); }
   </style>
 </head>
-<body>
-
+<body class=""> <div class="mesh-bg"></div>
   <div id="islamic-bg"></div>
   <div id="particles-js"></div>
 
-  <div class="fixed top-5 right-5 z-50 cursor-pointer theme-toggle" id="themeToggle">
-    <svg class="w-12 h-12 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  <button class="theme-toggle" id="themeToggle" title="Switch Theme">
+    <svg id="icon-sun" class="w-6 h-6 text-secondary hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
     </svg>
-  </div>
+    <svg id="icon-moon" class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+  </button>
 
-  <div class="container mx-auto px-4 py-8 max-w-7xl">
-
-    <header class="text-center mb-12">
-      <div class="moon-logo mx-auto mb-6"></div>
-      <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-      <h1>Superb Hyper Dashboard</h1>
-      <p class="text-emerald-300 text-xl mt-2">الْحَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ</p>
+  <div class="container mx-auto px-6 py-12 max-w-7xl relative">
+    
+    <header class="text-center mb-16 pt-8">
+      <div class="inline-block mb-4 p-4 rounded-full bg-primary-dim border border-primary-dim animate-float">
+        <svg class="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+        </svg>
+      </div>
+      <div class="text-4xl mb-4 font-amiri text-primary" style="font-family: 'Amiri', serif;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <h1 class="hero-title text-5xl md:text-7xl font-extrabold mb-2">SUPERB HYPER</h1>
+      <div class="h-1 w-24 bg-gradient-to-r from-primary via-secondary to-primary mx-auto rounded-full mb-4"></div>
+      <p class="text-muted tracking-widest text-sm uppercase font-bold">Intelligent Dashboard System</p>
     </header>
 
-    <!-- Stats + Prayer + Ayah -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-      <div class="grid grid-cols-3 gap-4">
-        <div class="stat-card p-5 rounded-2xl bg-slate-800/60 backdrop-blur border border-emerald-600/40 text-center">
-          <div class="stat-value text-4xl text-emerald-400">13</div>
-          <div class="stat-label text-gray-400">Active Apps</div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+      <div class="neo-glass p-8 flex flex-col justify-center text-center group">
+        <div class="text-secondary mb-4 opacity-50 group-hover:opacity-100 transition-opacity">
+          <svg class="w-8 h-8 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg>
         </div>
-        <div class="stat-card p-5 rounded-2xl bg-slate-800/60 backdrop-blur border border-yellow-600/40 text-center">
-          <div class="stat-value text-4xl text-yellow-400">4</div>
-          <div class="stat-label text-gray-400">Updated Today</div>
-        </div>
-        <div class="stat-card p-5 rounded-2xl bg-slate-800/60 backdrop-blur border border-purple-500/40 text-center">
-          <div class="stat-value text-4xl text-purple-400">98%</div>
-          <div class="stat-label text-gray-400">System Health</div>
+        <p class="text-2xl italic leading-relaxed mb-4 font-amiri text-main" id="ayah-arabic">...</p>
+        <p class="text-muted text-sm" id="ayah-translation">...</p>
+      </div>
+
+      <div class="neo-glass p-8 border-t-2 border-primary-dim">
+        <h3 class="text-center text-primary font-bold uppercase tracking-widest mb-6 text-xs">Prayer Schedule</h3>
+        <div id="prayer-times" class="space-y-3">
+          <div class="animate-pulse flex justify-between">
+            <div class="h-4 bg-gray-600 rounded w-1/4 opacity-20"></div>
+            <div class="h-4 bg-gray-600 rounded w-1/4 opacity-20"></div>
+          </div>
         </div>
       </div>
 
-      <div class="prayer-card p-6">
-        <h3 class="text-2xl font-bold text-emerald-400 mb-4">Prayer Times</h3>
-        <div id="prayer-times" class="space-y-2 text-lg">Detecting location…</div>
+      <div class="neo-glass p-8 grid grid-cols-2 gap-4">
+        <div class="bg-primary-dim rounded-xl p-4 border border-primary-dim">
+          <p class="text-xs text-primary uppercase font-bold">Health</p>
+          <p class="text-3xl font-bold text-main">98%</p>
+        </div>
+        <div class="bg-yellow-500/10 rounded-xl p-4 border border-yellow-500/20">
+          <p class="text-xs text-secondary uppercase font-bold">Uptime</p>
+          <p class="text-3xl font-bold text-main">24/7</p>
+        </div>
+        <div class="col-span-2 bg-primary-dim rounded-xl p-4 flex items-center justify-between">
+          <span class="text-muted text-sm">System Status</span>
+          <span class="flex h-3 w-3 bg-green-500 rounded-full shadow-[0_0_10px_#22c55e]"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-xl mx-auto mb-16 relative group z-20">
+      <input type="text" id="searchInput" 
+             class="search-input w-full p-5 pl-12 rounded-2xl outline-none transition-all focus:ring-2 focus:ring-primary/50" 
+             placeholder="Search operations... (e.g. 'Diesel')">
+      <svg class="w-6 h-6 absolute left-4 top-5 text-muted group-focus-within:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+      <div id="searchResults" class="neo-glass mt-4 absolute w-full max-w-xl hidden max-h-60 overflow-y-auto p-2 border border-primary-dim"></div>
+    </div>
+
+    <div class="flex justify-center gap-8 md:gap-12 mb-12 border-b border-primary-dim pb-4 flex-wrap">
+      <button class="tab-btn active font-bold text-sm md:text-base uppercase tracking-wider" data-tab="daily">Daily Ops</button>
+      <button class="tab-btn font-bold text-sm md:text-base uppercase tracking-wider" data-tab="weekly">Weekly</button>
+      <button class="tab-btn font-bold text-sm md:text-base uppercase tracking-wider" data-tab="monthly">Monthly</button>
+    </div>
+
+    <div id="app-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       </div>
 
-      <div class="ayah-card p-6 text-center">
-        <h3 class="text-xl text-yellow-400 mb-4">Ayah of the Day</h3>
-        <div class="ayah-arabic text-3xl leading-relaxed" id="ayah-arabic"></div>
-        <div id="ayah-translation" class="text-gray-300 mt-4"></div>
+    <footer class="mt-24 py-12 text-center border-t border-primary-dim">
+      <div class="flex justify-center gap-6 mb-4 items-center">
+        <span id="hijri-date" class="text-primary font-bold">...</span>
+        <span class="text-muted">|</span>
+        <span id="current-year" class="text-secondary font-bold"></span>
       </div>
-    </div>
-
-    <div class="search-container max-w-2xl mx-auto mb-10 relative">
-      <input type="text" id="searchInput" class="search-bar w-full p-5 rounded-full bg-slate-900/80 border-2 border-emerald-600/50 text-white text-lg placeholder-gray-500" placeholder="Search apps… (try voice: 'Open Paraffin')">
-      <div id="searchResults" class="search-results"></div>
-    </div>
-
-    <div class="tab-container flex justify-center gap-8 flex-wrap mb-10">
-      <button class="tab-btn active relative" data-tab="daily">Daily <span class="notification-badge">3</span></button>
-      <button class="tab-btn relative" data-tab="weekly">Weekly <span class="notification-badge">6</span></button>
-      <button class="tab-btn relative" data-tab="monthly">Monthly <span class="notification-badge">3</span></button>
-    </div>
-
-    <div class="glass-panel p-8 min-h-screen">
-      <div id="daily" class="tab-content active"></div>
-      <div id="weekly" class="tab-content"></div>
-      <div id="monthly" class="tab-content"></div>
-    </div>
-
-    <footer class="text-center mt-16 text-gray-400 text-lg">
-      <p>&copy; <span id="current-year"></span> Superb Hyper IT — 
-      <span id="hijri-date" class="text-emerald-400">Loading Hijri…</span>
+      <p class="text-muted text-xs tracking-[0.3em] uppercase">&copy; Superb Hyper IT Solutions</p>
     </footer>
   </div>
 
-  <div class="voice-assistant fixed bottom-6 right-6 z-50" id="voiceAssistant">
-    <svg class="w-10 h-10 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-    </svg>
-  </div>
-
 <script>
-  // YOUR ORIGINAL FULL DATA
-  const lastUpdates = {
-    "Bowser And Water": "2025-07-20",
-    "Paraffin Log Sheet": "2025-07-22",
-    "Visitor Form": "2025-07-18",
-    "Ilembe Flats": "2025-07-15",
-    "Reception Stocks": "2025-07-21",
-    "Diesel": "2025-07-19",
-    "Superb Hyper It": "2025-07-10",
-    "Fnb Fleet Card": "2025-07-12",
-    "Uniforms": "2025-07-14",
-    "Sticker Stocks": "2025-07-16",
-    "Driver Details Manager": "2025-07-17",
-    "FNB Terminal": "2025-07-23"
-  };
-
+  // --- CONFIGURATION & DATA ---
   const apps = {
     daily: [
-      { name: "Bowser And Water", url: "https://it-superbhyper.github.io/BOWSER-AND-WATER-/", description: "Access tools related to bowser and water management." },
-      { name: "Paraffin Log Sheet", url: "https://it-superbhyper.github.io/Paraffin-Log-Sheet/", description: "Log and track paraffin usage." },
-      { name: "FNB Terminal", url: "http://10.100.100.18:5000/", description: "Access FNB Terminal for banking operations." },
-      { name: "Diesel", url: "https://it-superbhyper.github.io/DIESEL-/", description: "Monitor and manage diesel-related operations." },
+      { name: "Bowser & Water", url: "https://it-superbhyper.github.io/BOWSER-AND-WATER-/", icon: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" },
+      { name: "Paraffin Log", url: "https://it-superbhyper.github.io/Paraffin-Log-Sheet/", icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" },
+      { name: "FNB Terminal", url: "http://10.100.100.18:5000/", icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" },
+      { name: "Diesel", url: "https://it-superbhyper.github.io/DIESEL-/", icon: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" }
     ],
     weekly: [
-      { name: "Visitor Form", url: "https://it-superbhyper.github.io/Visitor-Form/", description: "Streamline visitor registration and management." },
-      { name: "Ilembe Flats", url: "https://it-superbhyper.github.io/ILEMBE-FLATS/", description: "Access information and tools related to Ilembe Flats." },
-      { name: "Reception Stocks", url: "https://it-superbhyper.github.io/T-ROLLS/", description: "Manage and track inventory for reception supplies." },
-      { name: "Driver Details Manager", url: "http://10.100.100.18:3000/", description: "Manage and track driver details." }
+      { name: "Visitor Form", url: "https://it-superbhyper.github.io/Visitor-Form/", icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" },
+      { name: "Ilembe Flats", url: "https://it-superbhyper.github.io/ILEMBE-FLATS/", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" }
     ],
-   monthly: [
-  { name: "Fnb Fleet Card", url: "https://it-superbhyper.github.io/FNB-FLEET-CARD/", description: "Manage your FNB Fleet Card operations efficiently." },
-  { name: "Uniforms", url: "https://it-superbhyper.github.io/Uniforms/", description: "Manage and track company uniforms." },
-  { name: "Sticker Stocks", url: "https://it-superbhyper.github.io/Sticker-Stocks/", description: "Keep track of sticker inventory and orders." },
-  { name: "Sticker Trend", url: "https://it-superbhyper.github.io/sticker-trend/", description: "Monitor and analyze sticker trends and patterns." }
+    monthly: [
+      { name: "Fleet Card", url: "https://it-superbhyper.github.io/FNB-FLEET-CARD/", icon: "M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" },
+      { name: "Sticker Stocks", url: "https://it-superbhyper.github.io/Sticker-Stocks/", icon: "M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" }
     ]
   };
 
-  // Initialize the dashboard
-  document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('current-year').textContent = new Date().getFullYear();
+  document.getElementById('current-year').textContent = new Date().getFullYear();
 
-    // Initialize particles
-    if (typeof particlesJS !== 'undefined') {
-      particlesJS("particles-js", {
-        particles: { 
-          number: { value: 99 }, 
-          color: { value: ["#10b981", "#f59e0b", "#e2e8f0"] },
-          shape: { type: "circle" }, 
-          opacity: { value: 0.6 }, 
-          size: { value: 4 },
-          line_linked: { 
-            enable: true, 
-            distance: 180, 
-            color: "#10b981", 
-            opacity: 0.3 
-          },
-          move: { enable: true, speed: 1.5 }
-        },
-        interactivity: { 
-          events: { 
-            onhover: { enable: true, mode: "repulse" } 
-          } 
-        }
-      });
+  // --- THEME LOGIC ---
+  const themeToggle = document.getElementById('themeToggle');
+  const iconSun = document.getElementById('icon-sun');
+  const iconMoon = document.getElementById('icon-moon');
+  
+  // Particle Config Generator
+  const getParticleConfig = (colorHex) => ({
+    particles: {
+      number: { value: 70, density: { enable: true, value_area: 800 } },
+      color: { value: colorHex },
+      opacity: { value: 0.3 },
+      size: { value: 3 },
+      line_linked: { enable: true, distance: 150, color: colorHex, opacity: 0.15, width: 1 },
+      move: { enable: true, speed: 1.5, direction: "none" }
+    },
+    interactivity: {
+      events: { onhover: { enable: true, mode: "repulse" } }
     }
-
-    // Hijri Date
-    fetch('https://api.aladhan.com/v1/gToH')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('hijri-date').textContent = 
-          `${data.data.hijri.day} ${data.data.hijri.month.en} ${data.data.hijri.year} AH`;
-      })
-      .catch(error => {
-        console.error('Error fetching Hijri date:', error);
-        document.getElementById('hijri-date').textContent = 'Hijri date unavailable';
-      });
-
-    // Prayer Times
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          fetch(`https://api.aladhan.com/v1/timings?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&method=5`)
-            .then(response => response.json())
-            .then(data => {
-              const timings = data.data.timings;
-              document.getElementById('prayer-times').innerHTML = `
-                <div class="prayer-time"><span>Fajr</span><span>${timings.Fajr}</span></div>
-                <div class="prayer-time"><span>Dhuhr</span><span>${timings.Dhuhr}</span></div>
-                <div class="prayer-time"><span>Asr</span><span>${timings.Asr}</span></div>
-                <div class="prayer-time"><span>Maghrib</span><span>${timings.Maghrib}</span></div>
-                <div class="prayer-time"><span>Isha</span><span>${timings.Isha}</span></div>
-              `;
-            })
-            .catch(error => {
-              console.error('Error fetching prayer times:', error);
-              document.getElementById('prayer-times').innerHTML = 'Prayer times unavailable';
-            });
-        },
-        error => {
-          console.error('Geolocation error:', error);
-          document.getElementById('prayer-times').innerHTML = 'Location access required for prayer times';
-        }
-      );
-    } else {
-      document.getElementById('prayer-times').innerHTML = 'Geolocation not supported';
-    }
-
-    // Random Ayah
-    const ayat = [
-      {arabic: "إِنَّ اللَّهَ يُحِبُّ الْمُحْسِنِينَ", trans: "Indeed, Allah loves the doers of good (2:195)"},
-      {arabic: "فَاذْكُرُونِي أَذْكُرْكُمْ", trans: "Remember Me and I will remember you (2:152)"},
-      {arabic: "وَهُوَ مَعَكُمْ أَيْنَ مَا كُنْتُمْ", trans: "He is with you wherever you are (57:4)"}
-    ];
-    const randomAyah = ayat[Math.floor(Math.random() * ayat.length)];
-    document.getElementById('ayah-arabic').textContent = randomAyah.arabic;
-    document.getElementById('ayah-translation').textContent = randomAyah.trans;
-
-    // Tab functionality
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Remove active class from all buttons and contents
-        tabButtons.forEach(b => b.classList.remove('active'));
-        tabContents.forEach(c => c.classList.remove('active'));
-        
-        // Add active class to clicked button and corresponding content
-        btn.classList.add('active');
-        const tabId = btn.getAttribute('data-tab');
-        document.getElementById(tabId).classList.add('active');
-        
-        // Render apps if not already rendered
-        if (document.getElementById(tabId).children.length === 0) {
-          renderApps(tabId);
-        }
-        
-        // Haptic feedback if available
-        if (navigator.vibrate) {
-          navigator.vibrate(15);
-        }
-        
-        // Confetti effect
-        if (typeof confetti === 'function') {
-          confetti({ 
-            particleCount: 20, 
-            spread: 60, 
-            origin: { y: 0.4 }, 
-            colors: ['#10b981','#f59e0b'] 
-          });
-        }
-      });
-    });
-
-    // Search functionality
-    const searchInput = document.getElementById('searchInput');
-    const searchResults = document.getElementById('searchResults');
-    
-    searchInput.addEventListener('input', function() {
-      const query = this.value.toLowerCase().trim();
-      searchResults.innerHTML = '';
-      
-      if (query.length < 2) {
-        searchResults.style.display = 'none';
-        return;
-      }
-      
-      // Combine all apps
-      const allApps = [...apps.daily, ...apps.weekly, ...apps.monthly];
-      
-      // Filter apps based on query
-      const filteredApps = allApps.filter(app => 
-        app.name.toLowerCase().includes(query) || 
-        app.description.toLowerCase().includes(query)
-      );
-      
-      if (filteredApps.length > 0) {
-        filteredApps.forEach(app => {
-          const resultItem = document.createElement('div');
-          resultItem.className = 'search-result-item';
-          resultItem.innerHTML = `
-            <div class="font-bold text-emerald-300">${app.name}</div>
-            <div class="text-sm text-gray-400">${app.description}</div>
-          `;
-          resultItem.addEventListener('click', () => {
-            window.open(app.url, '_blank');
-            searchInput.value = '';
-            searchResults.style.display = 'none';
-            
-            if (typeof confetti === 'function') {
-              confetti({ 
-                particleCount: 30, 
-                spread: 70, 
-                colors: ['#10b981','#f59e0b'] 
-              });
-            }
-          });
-          searchResults.appendChild(resultItem);
-        });
-        searchResults.style.display = 'block';
-      } else {
-        searchResults.style.display = 'none';
-      }
-    });
-    
-    // Close search results when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-        searchResults.style.display = 'none';
-      }
-    });
-
-    // Voice Assistant
-    const voiceAssistant = document.getElementById('voiceAssistant');
-    let recognition;
-    
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.lang = 'en-ZA';
-      recognition.interimResults = false;
-      
-      recognition.onstart = function() {
-        voiceAssistant.classList.add('listening');
-      };
-      
-      recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript.toLowerCase();
-        voiceAssistant.classList.remove('listening');
-        
-        // Handle voice commands
-        if (transcript.includes('open') || transcript.includes('launch')) {
-          const appName = transcript.split(/(open|launch)\s+/i)[2];
-          const allApps = [...apps.daily, ...apps.weekly, ...apps.monthly];
-          const matchedApp = allApps.find(app => 
-            app.name.toLowerCase().includes(appName)
-          );
-          
-          if (matchedApp) {
-            window.open(matchedApp.url, '_blank');
-            if (typeof confetti === 'function') {
-              confetti({
-                particleCount: 40, 
-                colors: ['#10b981','#f59e0b']
-              });
-            }
-          }
-        } else if (transcript.includes('daily')) {
-          document.querySelector('[data-tab="daily"]').click();
-        } else if (transcript.includes('weekly')) {
-          document.querySelector('[data-tab="weekly"]').click();
-        } else if (transcript.includes('monthly')) {
-          document.querySelector('[data-tab="monthly"]').click();
-        }
-      };
-      
-      recognition.onerror = function() {
-        voiceAssistant.classList.remove('listening');
-      };
-      
-      recognition.onend = function() {
-        voiceAssistant.classList.remove('listening');
-      };
-      
-      voiceAssistant.addEventListener('click', function() {
-        try {
-          recognition.start();
-        } catch (error) {
-          console.error('Speech recognition error:', error);
-        }
-      });
-    } else {
-      // Hide voice assistant if not supported
-      voiceAssistant.style.display = 'none';
-    }
-
-    // Theme toggle functionality
-    const themeToggle = document.getElementById('themeToggle');
-    let isDarkMode = true;
-    
-    themeToggle.addEventListener('click', function() {
-      isDarkMode = !isDarkMode;
-      
-      if (isDarkMode) {
-        document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)';
-        themeToggle.querySelector('svg').classList.remove('text-gray-800');
-        themeToggle.querySelector('svg').classList.add('text-yellow-400');
-      } else {
-        document.body.style.background = 'linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 50%, #e2e8f0 100%)';
-        themeToggle.querySelector('svg').classList.remove('text-yellow-400');
-        themeToggle.querySelector('svg').classList.add('text-gray-800');
-      }
-      
-      if (typeof confetti === 'function') {
-        confetti({ 
-          particleCount: 30, 
-          spread: 70, 
-          colors: isDarkMode ? ['#10b981','#f59e0b'] : ['#3b82f6','#8b5cf6'] 
-        });
-      }
-    });
-
-    // Render all apps initially
-    renderApps('daily');
-    renderApps('weekly');
-    renderApps('monthly');
-
-    // Initial confetti
-    setTimeout(() => {
-      if (typeof confetti === 'function') {
-        confetti({ 
-          particleCount: 100, 
-          spread: 80, 
-          origin: { y: 0.6 }, 
-          colors: ['#10b981','#f59e0b','#ffffff'] 
-        });
-      }
-    }, 1000);
   });
 
-  // Function to render apps
-  function renderApps(tabId) {
-    const container = document.getElementById(tabId);
-    if (!container) return;
+  function setTheme(isLight) {
+    if (isLight) {
+      document.body.classList.add('light-mode');
+      iconSun.classList.remove('hidden');
+      iconMoon.classList.add('hidden');
+      // Sapphire Particles
+      particlesJS("particles-js", getParticleConfig("#1e40af"));
+    } else {
+      document.body.classList.remove('light-mode');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+      // Emerald Particles
+      particlesJS("particles-js", getParticleConfig("#10b981"));
+    }
+  }
+
+  // Event Listener
+  themeToggle.addEventListener('click', () => {
+    const isLight = !document.body.classList.contains('light-mode');
+    setTheme(isLight);
     
+    // Confetti burst on toggle
+    confetti({
+      particleCount: 40,
+      spread: 60,
+      origin: { x: 0.9, y: 0.1 },
+      colors: isLight ? ['#1e40af', '#b45309'] : ['#10b981', '#f59e0b']
+    });
+  });
+
+  // Init default (Dark/Emerald)
+  setTheme(false);
+
+  // --- APP RENDERING ---
+  function render(category) {
+    const container = document.getElementById('app-container');
     container.innerHTML = '';
     
-    apps[tabId].forEach((app, index) => {
+    apps[category].forEach((app, i) => {
       const card = document.createElement('div');
-      card.className = 'tilt-card p-6';
-      card.style.animationDelay = `${index * 0.1}s`;
+      card.className = "app-card neo-glass p-8 cursor-pointer group flex flex-col items-center text-center";
+      card.setAttribute('data-tilt', '');
+      card.setAttribute('data-tilt-max', '10');
+      card.setAttribute('data-tilt-glare', 'true');
+      card.setAttribute('data-tilt-max-glare', '0.2');
+
       card.innerHTML = `
-        <div class="flex items-start gap-4">
-          <div class="app-icon w-14 h-14 bg-gradient-to-br from-emerald-500 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg">
-            <svg class="w-8 h-8 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          <div class="w-16 h-16 bg-primary-dim rounded-2xl flex items-center justify-center mb-6 border border-primary-dim group-hover:bg-primary-dim transition-all duration-500 relative overflow-hidden">
+            <div class="absolute inset-0 bg-primary-dim opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <svg class="w-8 h-8 text-primary group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="${app.icon}"></path>
             </svg>
           </div>
-          <div class="flex-1">
-            <h2 class="text-2xl font-bold text-emerald-300">${app.name}</h2>
-            <p class="text-sm text-gray-400">Last updated: ${lastUpdates[app.name] || 'Recently'}</p>
-            <p class="mt-2 text-gray-300">${app.description}</p>
-          </div>
-        </div>
-        <a href="${app.url}" target="_blank" class="go-to-app inline-flex items-center gap-3 mt-6">
-          Open App → 
-        </a>
+          <h3 class="text-xl font-bold mb-2 tracking-wide text-main">${app.name}</h3>
+          <p class="text-muted text-sm mb-6">Operational Control</p>
+          <a href="${app.url}" class="text-xs font-black uppercase tracking-[0.2em] text-primary group-hover:text-secondary transition-colors z-10">Launch →</a>
       `;
-      container.appendChild(card);
 
-      // Add click event to open app when card is clicked (but not when clicking the link)
-      card.addEventListener('click', (e) => {
-        if (!e.target.closest('a')) {
-          window.open(app.url, '_blank');
-          if (typeof confetti === 'function') {
-            confetti({ 
-              particleCount: 30, 
-              spread: 70, 
-              colors: ['#10b981','#f59e0b'] 
-            });
-          }
-        }
-      });
+      card.onclick = (e) => {
+        // Prevent launching if clicking empty space (optional, usually card click is better)
+        if(!e.target.closest('a')) window.open(app.url, '_blank');
+      };
+
+      container.appendChild(card);
     });
+    
+    if(typeof VanillaTilt !== 'undefined') {
+      VanillaTilt.init(document.querySelectorAll(".app-card"));
+    }
   }
+
+  // --- TABS & SEARCH ---
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelector('.tab-btn.active').classList.remove('active');
+      btn.classList.add('active');
+      render(btn.dataset.tab);
+    };
+  });
+
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    searchResults.innerHTML = '';
+    if(term.length < 2) { searchResults.classList.add('hidden'); return; }
+
+    const allApps = [...apps.daily, ...apps.weekly, ...apps.monthly];
+    const matches = allApps.filter(a => a.name.toLowerCase().includes(term));
+
+    if(matches.length > 0) {
+      searchResults.classList.remove('hidden');
+      matches.forEach(m => {
+        const div = document.createElement('div');
+        div.className = "p-3 hover:bg-primary-dim cursor-pointer flex justify-between items-center transition-colors border-b border-primary-dim last:border-0";
+        div.innerHTML = `<span class="font-bold text-main">${m.name}</span> <span class="text-xs text-primary">GO</span>`;
+        div.onclick = () => window.open(m.url, '_blank');
+        searchResults.appendChild(div);
+      });
+    } else {
+      searchResults.classList.add('hidden');
+    }
+  });
+
+  // Close search on outside click
+  document.addEventListener('click', (e) => {
+    if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+      searchResults.classList.add('hidden');
+    }
+  });
+
+  // --- DATA FETCHING ---
+  async function initData() {
+    try {
+      // Hijri
+      const hReq = await fetch('https://api.aladhan.com/v1/gToH');
+      const hData = await hReq.json();
+      document.getElementById('hijri-date').textContent = `${hData.data.hijri.day} ${hData.data.hijri.month.en} ${hData.data.hijri.year} AH`;
+
+      // Prayers (KZN Coordinates)
+      const pReq = await fetch('https://api.aladhan.com/v1/timings?latitude=-29.8587&longitude=31.0218&method=2');
+      const pData = await pReq.json();
+      const times = pData.data.timings;
+      
+      const pList = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+      document.getElementById('prayer-times').innerHTML = pList.map(p => `
+        <div class="flex justify-between items-center border-b border-primary-dim pb-2 last:border-0">
+          <span class="text-muted text-sm font-medium">${p}</span>
+          <span class="text-primary font-bold">${times[p]}</span>
+        </div>
+      `).join('');
+
+      // Ayah
+      const ayat = [
+        {a: "إِنَّ مَعَ الْعُسْرِ يُسْرًا", t: "Verily, with hardship comes ease. (94:6)"},
+        {a: "وَقُل رَّبِّ زِدْنِي عِلْمًا", t: "And say: My Lord, increase me in knowledge. (20:114)"}
+      ];
+      const selected = ayat[Math.floor(Math.random() * ayat.length)];
+      document.getElementById('ayah-arabic').textContent = selected.a;
+      document.getElementById('ayah-translation').textContent = selected.t;
+
+    } catch (e) { console.error("Data Fetch Error", e); }
+  }
+
+  // Initial Boot
+  render('daily');
+  initData();
+
 </script>
 </body>
 </html>
