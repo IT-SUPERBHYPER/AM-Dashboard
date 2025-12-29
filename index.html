@@ -281,11 +281,15 @@
     ],
     weekly: [
       { name: "Visitor Form", url: "https://it-superbhyper.github.io/Visitor-Form/", icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" },
-      { name: "seaview Flats", url: "https://it-superbhyper.github.io/Seaview/", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" }
+      { name: "seaview Flats", url: "https://it-superbhyper.github.io/Seaview/", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
+      { name: "Reception Stocks", url: "https://it-superbhyper.github.io/T-ROLLS/", description: "Manage and track inventory for reception supplies.", icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" },
+      { name: "Driver Details Manager", url: "http://10.100.100.18:3000/", description: "Manage and track driver details.", icon: "M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0" }
     ],
     monthly: [
       { name: "Fleet Card", url: "https://it-superbhyper.github.io/FNB-FLEET-CARD/", icon: "M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" },
-      { name: "Sticker Stocks", url: "https://it-superbhyper.github.io/Sticker-Stocks/", icon: "M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" }
+      { name: "Sticker Stocks", url: "https://it-superbhyper.github.io/Sticker-Stocks/", icon: "M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" },
+      { name: "Uniforms", url: "https://it-superbhyper.github.io/Uniforms/", description: "Manage and track company uniforms.", icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" },
+      { name: "Sticker Trend", url: "https://it-superbhyper.github.io/sticker-trend/", description: "Monitor and analyze sticker trends and patterns.", icon: "M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" }
     ]
   };
 
@@ -357,6 +361,9 @@
       card.setAttribute('data-tilt-glare', 'true');
       card.setAttribute('data-tilt-max-glare', '0.2');
 
+      // Use the description if available, otherwise fallback to generic text
+      const description = app.description || 'Operational Control';
+
       card.innerHTML = `
           <div class="w-16 h-16 bg-primary-dim rounded-2xl flex items-center justify-center mb-6 border border-primary-dim group-hover:bg-primary-dim transition-all duration-500 relative overflow-hidden">
             <div class="absolute inset-0 bg-primary-dim opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -365,12 +372,11 @@
             </svg>
           </div>
           <h3 class="text-xl font-bold mb-2 tracking-wide text-main">${app.name}</h3>
-          <p class="text-muted text-sm mb-6">Operational Control</p>
+          <p class="text-muted text-sm mb-6 h-10 line-clamp-2">${description}</p>
           <a href="${app.url}" class="text-xs font-black uppercase tracking-[0.2em] text-primary group-hover:text-secondary transition-colors z-10">Launch →</a>
       `;
 
       card.onclick = (e) => {
-        // Prevent launching if clicking empty space (optional, usually card click is better)
         if(!e.target.closest('a')) window.open(app.url, '_blank');
       };
 
@@ -406,8 +412,14 @@
       searchResults.classList.remove('hidden');
       matches.forEach(m => {
         const div = document.createElement('div');
-        div.className = "p-3 hover:bg-primary-dim cursor-pointer flex justify-between items-center transition-colors border-b border-primary-dim last:border-0";
-        div.innerHTML = `<span class="font-bold text-main">${m.name}</span> <span class="text-xs text-primary">GO</span>`;
+        div.className = "p-3 hover:bg-primary-dim cursor-pointer flex flex-col justify-center transition-colors border-b border-primary-dim last:border-0";
+        // Also show description in search results if available
+        const subText = m.description ? `<span class="text-xs text-muted block">${m.description}</span>` : '';
+        div.innerHTML = `<div class="flex justify-between items-center w-full">
+                          <span class="font-bold text-main">${m.name}</span> 
+                          <span class="text-xs text-primary">GO</span>
+                        </div>
+                        ${subText}`;
         div.onclick = () => window.open(m.url, '_blank');
         searchResults.appendChild(div);
       });
